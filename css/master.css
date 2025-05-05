@@ -1,0 +1,71 @@
+/******************* global **************/
+:root {
+    --main-color: #9d6ff8;
+}
+
+
+@font-face {
+    font-family: PT;
+    src: url("../fonts/PTMono-Regular.ttf");
+}
+
+body::selection {
+    background-color: aliceblue;
+    color: var(--main-color);
+}
+
+body {
+    background-color: var(--main-color);
+    font-family: PT;
+    font-weight: 700 !important;
+}
+
+/*************** from style **************/
+
+.customInput:focus {
+    box-shadow: 0 0 0 .3125rem #9d6ff891;
+}
+
+.btnAdd {
+    padding: .3125rem 1.5625rem;
+    color: white;
+    background-color: var(--main-color);
+    border: transparent;
+    font-weight: 700 !important;
+}
+
+.trashicon {
+    background-color: #9d6ff8;
+    color: white;
+    padding: .3125rem .625rem;
+    border-radius: .3125rem;
+    cursor: pointer;
+}
+
+.taskName {
+    position: relative;
+    margin-block: .3125rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+
+.taskName::after {
+    content: "click to complete";
+    position: absolute;
+    background-color: black;
+    color: white;
+    top: 100%;
+    left: 0;
+    padding: 5px;
+    font-size: 0.5rem;
+    text-wrap: nowrap;
+    border-radius: 5px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.taskName:hover::after{
+    opacity: 1;
+}
