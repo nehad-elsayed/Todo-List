@@ -1,6 +1,6 @@
 /******************* global **************/
 :root {
-    --main-color: #9d6ff8;
+    --main-color: #670d5092;
 }
 
 
@@ -23,7 +23,7 @@ body {
 /*************** from style **************/
 
 .customInput:focus {
-    box-shadow: 0 0 0 .3125rem #9d6ff891;
+    box-shadow: 0 0 0 .3125rem #670d5142;
 }
 
 .btnAdd {
@@ -35,7 +35,7 @@ body {
 }
 
 .trashicon {
-    background-color: #9d6ff8;
+    background-color: #670d5092;
     color: white;
     padding: .3125rem .625rem;
     border-radius: .3125rem;
@@ -46,8 +46,9 @@ body {
     position: relative;
     margin-block: .3125rem;
     cursor: pointer;
-    font-size: 1.5rem;
+    font-size: 1rem;
 }
+
 
 
 .taskName::after {

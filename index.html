@@ -11,6 +11,7 @@
   </head>
   <body>
     <section>
+      <h1 class="p-2 mt-4 text-center text-capitalize fw-bolder text-white"> * To-do List * </h1>
       <div class="w-50 mx-auto my-4">
         <form class="d-flex gap-4 bg-white p-3 rounded shadow-md">
           <input type="text"
@@ -19,18 +20,8 @@
           <button class="btnAdd rounded">Add</button>
         </form>
 
-        <ul class="menutasks list-styled-none bg-white rounded mt-5 p-4">
-          <li class="d-flex align-items-center justify-content-between p-2 my-3 border-bottom pb-2">
-            <span class="taskName"> Task Name </span>
-            <div class="d-flex align-items-center justify-content-center gap-3">
-              <span class="trashicon">
-                <i class="fa-solid fa-trash-can"></i>
-              </span>
-              <span class="checkIcon">
-                <i class="fa-regular fa-circle-check" style="color: #63e6be" ></i>
-              </span>
-            </div>
-          </li>
+        <ul  id="menuTasks" class="menutasks list-styled-none bg-white rounded mt-5 p-4">
+         
         </ul>
       </div>
     </section>
