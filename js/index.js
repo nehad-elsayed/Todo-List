@@ -6,7 +6,10 @@ const Loading = document.querySelector(".loading")
 let myTodoList = [];
 let apiKey = "6819330260a208ee1fdf5db0";
 
-// to get and display data when open we call getAllTodos f eltal
+
+
+
+// to get and display data when the user open the app  we call getAllTodos here in global
 getAllTodos();
 
 //eventsssssssssss========>>>>
@@ -46,7 +49,6 @@ async function addTodo() {
     let data = await response.json();
 
     if (data.message == "success") {
-      hideLoading()
       toastr.success("Your Task Added");
       await getAllTodos(); //بقوله هنا يستني التودوز وعدين بعمل كلير للفورم
       formElement.reset();
@@ -55,6 +57,7 @@ async function addTodo() {
     //   toastr.error("you can't add an empty task ");
     // } // لغيت الالس هنا عشان مبعتش ريكويست زياده للباك اند يفضل ان انا اعمل تشيك علي التايتل ف الاول ف الايفنت سابميت
   }
+  hideLoading() // ف الحالتين سواء اتنفذ او لا اخفي اللودنج
 }
 
 // 2) functions getAllTodos and display them ====>>>>>>
@@ -101,51 +104,93 @@ function displayTodos() {
 }
 
 // 3) function to delete Todo   ====>>>
-async function deleteTodo(Id) {
-  const todoData = {
-    todoId: Id,
-  };
-  const obj = {
-    method: "DELETE",
-    body: JSON.stringify(todoData),
-    headers: {
-      "content-type": "application/json",
-    },
-  };
+ function deleteTodo(Id) {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!"
+  }).then( async (result) => {
+    if (result.isConfirmed) {
 
-  const response = await fetch(`https://todos.routemisr.com/api/v1/todos`, obj);
+      const todoData = {
+        todoId: Id,
+      };
+    
+    
+      const obj = {
+        method: "DELETE",
+        body: JSON.stringify(todoData),
+        headers: {
+          "content-type": "application/json",
+        },
+      };
+    
+      const response = await fetch(`https://todos.routemisr.com/api/v1/todos`, obj);
+    
+      if (response.ok) {
+        const data = await response.json();
+        if (data.message == "success") {
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"
+          });
+          getAllTodos(); // to display the new list after deleting
+        }
+      }
 
-  if (response.ok) {
-    const data = await response.json();
-    if (data.message == "success") {
-      getAllTodos(); // to display the new list after deleting
+    
     }
-  }
+  });
+
 }
 
 // 4) function if  task completed ===>>>>
-async function todoCompleted(ID) {
-  todoData = {
-    todoId: ID,
-  };
+ function todoCompleted(ID) {
+  Swal.fire({
+    title: " mark as complete?",
+    text: "You won't be able to change this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, complete it!"
+  }).then(async(result) => {
+    if (result.isConfirmed) {
+      todoData = {
+        todoId: ID,
+      };
+    
+      const obj = {
+        method: "PUT",
+        body: JSON.stringify(todoData),
+        headers: {
+          "content-type": " application/json",
+        },
+      };
+    
+      const response = await fetch("https://todos.routemisr.com/api/v1/todos", obj);
+    
+      if (response.ok) {
+        const data = await response.json();
+        if (data.message == "success") {
+          Swal.fire({
+            title: "Completed!",
+            icon: "success"
+          });
+          await getAllTodos();
+          console.log("completed");
+        }
+      }
 
-  const obj = {
-    method: "PUT",
-    body: JSON.stringify(todoData),
-    headers: {
-      "content-type": " application/json",
-    },
-  };
-
-  const response = await fetch("https://todos.routemisr.com/api/v1/todos", obj);
-
-  if (response.ok) {
-    const data = await response.json();
-    if (data.message == "success") {
-      await getAllTodos();
-      console.log("completed");
+   
     }
-  }
+  });
+
 }
 
 //====>>>> functions To conrtoool loooooading screeeen ===>>>
