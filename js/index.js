@@ -11,7 +11,12 @@ getAllTodos();
 //eventsssssssssss========>>>>
 formElement.addEventListener("submit", (e) => {
   e.preventDefault();
+
+if(formInput.value.trim().length > 0 ){
   addTodo();
+}
+//don't add the task if the title is empty 
+
 });
 
 //functionnnnnssssssssss =====>>>>>
@@ -39,10 +44,13 @@ async function addTodo() {
     let data = await response.json();
 
     if (data.message == "success") {
-      console.log("task added");
+      toastr.success("Your Task Added");
       await getAllTodos(); //بقوله هنا يستني التودوز وعدين بعمل كلير للفورم
       formElement.reset();
     }
+    //  else {
+    //   toastr.error("you can't add an empty task ");
+    // } // لغيت الالس هنا عشان مبعتش ريكويست زياده للباك اند يفضل ان انا اعمل تشيك علي التايتل ف الاول ف الايفنت سابميت
   }
 }
 
@@ -65,7 +73,7 @@ async function getAllTodos() {
 function displayTodos() {
   let box = "";
   for (let i = 0; i < myTodoList.length; i++) {
-    box +=  ` <li class="d-flex align-items-center justify-content-between p-2 my-3 border-bottom pb-2">
+    box += ` <li class="d-flex align-items-center justify-content-between p-2 my-3 border-bottom pb-2">
             ${
               myTodoList[i].completed
                 ? ` <span onclick="todoCompleted('${myTodoList[i]._id}')" style="text-decoration: line-through;"  class="taskName"> ${myTodoList[i].title} </span>`
@@ -73,7 +81,9 @@ function displayTodos() {
             }
               <p class="date">${myTodoList[i].createdAt.split("T", 1)}</p>
               <div class="d-flex align-items-center justify-content-center gap-3">
-                <span class="trashicon" onclick="deleteTodo('${myTodoList[i]._id}')"><i class="fa-solid fa-trash-can"></i>
+                <span class="trashicon" onclick="deleteTodo('${
+                  myTodoList[i]._id
+                }')"><i class="fa-solid fa-trash-can"></i>
                 </span>
                 ${
                   myTodoList[i].completed
@@ -105,39 +115,33 @@ async function deleteTodo(Id) {
   if (response.ok) {
     const data = await response.json();
     if (data.message == "success") {
-    getAllTodos(); // to display the new list after deleting
+      getAllTodos(); // to display the new list after deleting
     }
   }
 }
 
-
-
 // 4) function if  task completed ===>>>>
 
-async function todoCompleted(ID){
+async function todoCompleted(ID) {
+  todoData = {
+    todoId: ID,
+  };
 
-todoData={
-     todoId:ID
-}
+  const obj = {
+    method: "PUT",
+    body: JSON.stringify(todoData),
+    headers: {
+      "content-type": " application/json",
+    },
+  };
 
-const obj ={
-    method:"PUT",
-    body:JSON.stringify(todoData),
-    headers:{
-        "content-type": " application/json"
+  const response = await fetch("https://todos.routemisr.com/api/v1/todos", obj);
+
+  if (response.ok) {
+    const data = await response.json();
+    if (data.message == "success") {
+      await getAllTodos();
+      console.log("completed");
     }
-}
-
-
-const response =await fetch("https://todos.routemisr.com/api/v1/todos",obj)
-
-if(response.ok){
-    const data = await response.json()
-    if(data.message=="success"){
-       
-     await getAllTodos()
-     console.log("completed")
-    }
-}
-
+  }
 }
