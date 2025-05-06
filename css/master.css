@@ -23,7 +23,7 @@ body {
 /*************** from style **************/
 
 .customInput:focus {
-    box-shadow: 0 0 0 .3125rem #670d5142;
+    box-shadow: 0 0 0 .3125rem #670d514e;
 }
 
 .btnAdd {
@@ -67,6 +67,6 @@ body {
     transition: opacity 0.3s;
 }
 
-.taskName:hover::after{
+.taskName:hover::after {
     opacity: 1;
 }
