@@ -2,6 +2,7 @@
 
 const formElement = document.querySelector("form");
 const formInput = document.querySelector(".customInput");
+const Loading = document.querySelector(".loading")
 let myTodoList = [];
 let apiKey = "6819330260a208ee1fdf5db0";
 
@@ -35,7 +36,8 @@ async function addTodo() {
       "content-type": "application/json",
     },
   };
-
+  
+  showLoading()
   let response = await fetch(
     "https://todos.routemisr.com/api/v1/todos",
     objConfig
@@ -44,6 +46,7 @@ async function addTodo() {
     let data = await response.json();
 
     if (data.message == "success") {
+      hideLoading()
       toastr.success("Your Task Added");
       await getAllTodos(); //بقوله هنا يستني التودوز وعدين بعمل كلير للفورم
       formElement.reset();
@@ -121,7 +124,6 @@ async function deleteTodo(Id) {
 }
 
 // 4) function if  task completed ===>>>>
-
 async function todoCompleted(ID) {
   todoData = {
     todoId: ID,
@@ -145,3 +147,15 @@ async function todoCompleted(ID) {
     }
   }
 }
+
+//====>>>> functions To conrtoool loooooading screeeen ===>>>
+function showLoading(){
+Loading.classList.remove("d-none")
+
+
+}
+function hideLoading(){
+  Loading.classList.add("d-none")
+}
+
+
