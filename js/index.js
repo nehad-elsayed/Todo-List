@@ -6,7 +6,7 @@ const Loading = document.querySelector(".loading");
 let myTodoList = [];
 let apiKey = "6819330260a208ee1fdf5db0";
 
-// to get and display data when the user open the app  we call getAllTodos here in global
+//to get and display data when the user open the app  we call getAllTodos here in global
 getAllTodos();
 
 //eventsssssssssss========>>>>
@@ -99,6 +99,7 @@ function displayTodos() {
   }
 
   document.getElementById("menuTasks").innerHTML = box;
+  updateProgress()
 }
 
 // 3) function to delete Todo   ====>>>
@@ -200,4 +201,24 @@ function showLoading() {
 }
 function hideLoading() {
   Loading.classList.add("d-none");
+}
+
+//function to control progress par  ====>>>>>>>//
+function updateProgress(){
+
+let completedTaskNumber= myTodoList.filter((task)=>task.completed).length;
+let totalTasks= myTodoList.length ;
+
+if(myTodoList.length > 0 ){
+  document.getElementById("progress").style.width=`${(completedTaskNumber/totalTasks)*100}%`;
+} 
+else {
+  document.getElementById("progress").style.width=0
+}
+
+
+const Spans= document.querySelectorAll(".right-content span");
+Spans[0].innerHTML=completedTaskNumber;
+Spans[1].innerHTML=totalTasks;
+
 }
